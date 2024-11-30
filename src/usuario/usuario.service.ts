@@ -5,7 +5,7 @@ import { UsuarioEntity } from '../usuario/usuario.entity/usuario.entity';
 import {
   BusinessError,
   BusinessLogicException,
-} from 'src/shared/errors/business-errors';
+} from '../shared/errors/business-errors';
 
 @Injectable()
 export class UsuarioService {
@@ -26,11 +26,11 @@ export class UsuarioService {
       }
     }
 
-    if (usuario.rol === 'Decana') {
+    if (usuario.rol === 'Decano') {
       const numeroExtensionStr = usuario.numeroExtension.toString();
       if (numeroExtensionStr.length !== 8) {
         throw new BusinessLogicException(
-          'La extension no es correcta',
+          'La extension del decano/a no es correcta',
           BusinessError.BAD_REQUEST,
         );
       }

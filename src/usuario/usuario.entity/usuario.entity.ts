@@ -1,5 +1,5 @@
-import { BonoEntity } from 'src/bono/bono.entity/bono.entity';
-import { ClaseEntity } from 'src/clase/clase.entity/clase.entity';
+import { BonoEntity } from '../../bono/bono.entity/bono.entity';
+import { ClaseEntity } from '../../clase/clase.entity/clase.entity';
 import {
   Entity,
   Column,
@@ -11,7 +11,8 @@ import {
 
 @Entity()
 export class UsuarioEntity {
-  @PrimaryGeneratedColumn('uuid')
+  // Esto es para que sea un long:
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
@@ -20,13 +21,13 @@ export class UsuarioEntity {
   @Column()
   nombre: string;
 
-  @Column()
+  @Column({})
   grupoInvestigacion: string;
 
   @Column()
   numeroExtension: number;
 
-  @Column()
+  @Column({})
   rol: string;
 
   @OneToOne(() => UsuarioEntity, (jefe) => jefe.usuario)

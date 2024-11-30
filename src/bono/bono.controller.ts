@@ -18,19 +18,22 @@ import { Param } from '@nestjs/common';
 export class BonoController {
   constructor(private readonly bonoService: BonoService) {}
 
-  @Post()
-  async createBono(@Body() fotoDto: BonoDto) {
+  @Post(':usuarioID')
+  async createBono(
+    @Param('usuarioID') usuarioID: number,
+    @Body() bonoDto: BonoDto,
+  ) {
     // Acá se mapean los datos del DTO a la entidad:
-    const bono: BonoEntity = plainToInstance(BonoEntity, fotoDto);
-    return await this.bonoService.createBono(bono);
+    const bono: BonoEntity = plainToInstance(BonoEntity, bonoDto);
+    return await this.bonoService.createBono(bono, usuarioID);
   }
 
-  @Get(':codigo')
+  @Get('codigo/:codigo')
   async findOneCodigo(@Param('codigo') codigo: string) {
-    return await this.bonoService.findBonoByCodigo(codigo);
+    return await this.bonoService.findBonosByCodigo(codigo);
   }
 
-  @Get(':usuarioId')
+  @Get('usuario/:usuarioId')
   async findOneUsuario(@Param('usuarioId') usuarioId: number) {
     return await this.bonoService.findAllBonosByUsuario(usuarioId);
   }

@@ -26,16 +26,16 @@ export class ClaseService {
   }
 
   async findClaseById(id: number): Promise<ClaseEntity> {
-    const album: ClaseEntity = await this.claseRepository.findOne({
+    const clase: ClaseEntity = await this.claseRepository.findOne({
       where: { id },
       relations: ['bonos'],
     });
-    if (!album)
+    if (!clase)
       throw new BusinessLogicException(
         'La clase con el id dado no fue encontrada',
         BusinessError.NOT_FOUND,
       );
 
-    return album;
+    return clase;
   }
 }

@@ -1,16 +1,16 @@
-import { ClaseEntity } from 'src/clase/clase.entity/clase.entity';
-import { UsuarioEntity } from 'src/usuario/usuario.entity/usuario.entity';
+import { ClaseEntity } from '../../clase/clase.entity/clase.entity';
+import { UsuarioEntity } from '../../usuario/usuario.entity/usuario.entity';
 import { Entity, Column, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity()
 export class BonoEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
   monto: number;
 
-  @Column('double')
+  @Column('float')
   calificacion: number;
 
   @Column()

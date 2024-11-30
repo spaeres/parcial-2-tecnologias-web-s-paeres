@@ -1,13 +1,13 @@
-import { IsNotEmpty, IsString, IsUrl } from 'class-validator';
+import { IsNotEmpty, IsString, IsNumber } from 'class-validator';
 
 export class BonoDto {
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  monto: string;
+  monto: number;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  calificacion: string;
+  calificacion: number;
 
   @IsString()
   @IsNotEmpty()

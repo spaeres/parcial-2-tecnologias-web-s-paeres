@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BonoEntity } from '../bono/bono.entity/bono.entity';
+import { UsuarioEntity } from '../usuario/usuario.entity/usuario.entity';
 import { Repository } from 'typeorm';
 import {
   BusinessError,
@@ -12,38 +13,51 @@ export class BonoService {
   constructor(
     @InjectRepository(BonoEntity)
     private readonly bonoRepository: Repository<BonoEntity>,
+
+    @InjectRepository(UsuarioEntity)
+    private readonly usuarioRepository: Repository<UsuarioEntity>,
   ) {}
 
-  async createBono(bono: BonoEntity): Promise<BonoEntity> {
-    if (!bono.monto) {
+  async createBono(bono: BonoEntity, usuarioID: number): Promise<BonoEntity> {
+    const usuario = await this.usuarioRepository.findOne({
+      where: { id: usuarioID },
+    });
+
+    if (!usuario) {
       throw new BusinessLogicException(
-        'El monto no puede estar vacío',
+        `El usuario con ID ${usuarioID} no existe`,
         BusinessError.BAD_REQUEST,
       );
     }
 
-    if (bono.monto <= 0) {
+    // Verificar si el usuario tiene el rol "Profesor"
+    if (usuario.rol !== 'Profesor') {
       throw new BusinessLogicException(
-        'El monto debe ser positivo',
+        'Solo un usuario con rol Profesor puede crear un bono',
         BusinessError.BAD_REQUEST,
       );
     }
 
-    if (bono.usuario?.rol !== 'Profesor') {
+    // Validar el monto del bono
+    if (!bono.monto || bono.monto <= 0) {
       throw new BusinessLogicException(
-        'Solo los usuarios con rol Profesor pueden tener bonos',
+        'El monto debe ser un valor positivo y no puede estar vacio',
         BusinessError.BAD_REQUEST,
       );
     }
+
+    bono.usuario = usuario;
 
     return await this.bonoRepository.save(bono);
   }
 
-  async findBonoByCodigo(codigo: string): Promise<BonoEntity[]> {
+  async findBonosByCodigo(codigo: string): Promise<BonoEntity[]> {
     const bonos = await this.bonoRepository.find({
       where: { clase: { codigo: codigo } },
-      relations: ['clases'],
+      relations: ['clase'],
     });
+
+    console.log('Bonos encontrados:', bonos);
 
     if (!bonos || bonos.length === 0) {
       throw new BusinessLogicException(
@@ -56,10 +70,20 @@ export class BonoService {
   }
 
   async findAllBonosByUsuario(usuarioId: number): Promise<BonoEntity[]> {
-    return await this.bonoRepository.find({
+    // Busca los bonos asociados al usuario por su ID
+    const bonos = await this.bonoRepository.find({
       where: { usuario: { id: usuarioId } },
       relations: ['usuario'],
     });
+
+    // Verifica si no se encontraron bonos y lanza un error en ese caso
+    if (!bonos || bonos.length === 0) {
+      throw new BusinessLogicException(
+        `No se encontraron bonos para el usuario con ID ${usuarioId}`,
+        BusinessError.NOT_FOUND,
+      );
+    }
+    return bonos;
   }
 
   async deleteBono(id: number) {

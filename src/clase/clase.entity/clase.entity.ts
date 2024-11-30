@@ -1,5 +1,5 @@
-import { BonoEntity } from 'src/bono/bono.entity/bono.entity';
-import { UsuarioEntity } from 'src/usuario/usuario.entity/usuario.entity';
+import { BonoEntity } from '../../bono/bono.entity/bono.entity';
+import { UsuarioEntity } from '../../usuario/usuario.entity/usuario.entity';
 import {
   Entity,
   Column,
@@ -10,7 +10,7 @@ import {
 
 @Entity()
 export class ClaseEntity {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn('increment')
   id: number;
 
   @Column()
