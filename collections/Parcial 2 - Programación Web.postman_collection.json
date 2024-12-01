@@ -1,0 +1,753 @@
+{
+	"info": {
+		"_postman_id": "e88a3939-9097-4ae4-adae-d3c9804d5a7c",
+		"name": "Parcial 2 - Programación Web",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "31977186"
+	},
+	"item": [
+		{
+			"name": "Bono",
+			"item": [
+				{
+					"name": "Crear Clase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"clase_codigo\", data.codigo);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Introducción a la Programación\",\n  \"codigo\": \"IP10000001\",\n  \"numeroCreditos\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/clase/",
+						"description": "# Crear una nueva clase\n\nEste endpoint se utiliza para crear una nueva clase en el sistema. Esta clase se crea para asignarsela después al bono que se quiere probar su creación.\n\n## Request Body\n\n- nombre (string, required): El nombre de la clase.\n    \n- codigo (string, required): El código único de la clase.\n    \n- numeroCreditos (integer, required): El número de créditos asignados a la clase.\n    \n\nEjemplo del cuerpo de la solicitud:\n\n``` json\n{\n  \"nombre\": \"Introducción a la Programación\",\n  \"codigo\": \"IP10000001\",\n  \"numeroCreditos\": 3\n}\n\n ```\n\n## Response (200 OK)\n\nEl cuerpo de la respuesta contendrá los detalles de la clase recién creada.\n\nEjemplo del cuerpo de la respuesta:\n\n``` json\n{\n  \"id\": \"clase-123\",\n  \"nombre\": \"Introducción a la Programación\",\n  \"codigo\": \"IP10000001\",\n  \"numeroCreditos\": 3,\n  \"fechaCreacion\": \"2022-01-01T12:00:00Z\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Usuario Profesor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"usuario_profesor_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 1234567890,\n    \"nombre\": \"Juan Pérez\",\n    \"grupoInvestigacion\": \"TICSW\",\n    \"numeroExtension\": 1234,\n    \"rol\": \"Profesor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/usuario/",
+						"description": "# Crear un nuevo usuario profesor\n\nEste endpoint se utiliza para crear un nuevo usuario profesor en el sistema. Este usuario se crea para después asiganrlo al bono y probarlo en la creación del bono.\n\n## Petición\n\n### Body\n\n- `numeroCedula` (number): El número de cédula del usuario.\n    \n- `nombre` (string): El nombre del usuario.\n    \n- `grupoInvestigacion` (string): El grupo de investigación al que pertenece el usuario.\n    \n- `numeroExtension` (number): El número de extensión del usuario.\n    \n- `rol` (string): El rol del usuario en el sistema.\n    \n\nEjemplo del cuerpo de la solicitud:\n\n``` json\n{\n    \"numeroCedula\": 1234567890,\n    \"nombre\": \"Juan Pérez\",\n    \"grupoInvestigacion\": \"TICSW\",\n    \"numeroExtension\": 1234,\n    \"rol\": \"Profesor\"\n}\n\n ```\n\n## Respuesta\n\nLa respuesta de la solicitud contendrá los detalles del usuario recién creado en el sistema."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Usuario Decano",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"usuario_decano_bono_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 124536272,\n    \"nombre\": \"Pedro Pérez\",\n    \"grupoInvestigacion\": \"IMAGINE\",\n    \"numeroExtension\": 12345678,\n    \"rol\": \"Decano\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/usuario/",
+						"description": "# Crear un nuevo usuario decano\n\nEste endpoint se utiliza para crear un nuevo usuario profesor en el sistema. Este usuario se crea para después asiganrlo al bono y probarlo en la creación del bono.\n\n## Petición\n\n### Body\n\n- `numeroCedula` (number): El número de cédula del usuario.\n    \n- `nombre` (string): El nombre del usuario.\n    \n- `grupoInvestigacion` (string): El grupo de investigación al que pertenece el usuario.\n    \n- `numeroExtension` (number): El número de extensión del usuario.\n    \n- `rol` (string): El rol del usuario en el sistema.\n    \n\nEjemplo del cuerpo de la solicitud:\n\n``` json\n{\n    \"numeroCedula\": 1234567890,\n    \"nombre\": \"Juan Pérez\",\n    \"grupoInvestigacion\": \"TICSW\",\n    \"numeroExtension\": 1234,\n    \"rol\": \"Profesor\"\n}\n\n ```\n\n## Respuesta\n\nLa respuesta de la solicitud contendrá los detalles del usuario recién creado en el sistema."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Bono",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"bono_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"monto\": 1500,\n   \"calificacion\": 4,\n   \"palabraClave\": \"incentivo2024\",\n   \"clase\": \"{{clase_codigo_bono_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/bono/{{usuario_profesor_id}}",
+						"description": "#### **Crear un nuevo Bono**\n\nEste endpoint realiza una solicitud HTTP POST para crear una nueva entrada relacionada con el ID del usuario especificado. La solicitud debe realizarse a `http://localhost:3000/api/v1/bono/1`\n\nEl parametro en la URL indica el id del profesor que va a crear el bono actual.\n\n#### **Cuerpo de la solicitud**\n\nEl cuerpo de la solicitud debe estar en formato JSON e incluir los siguientes parámetros:\n\n- **monto** (número): El monto asociado con la entrada.\n    \n- **calificacion** (número): La calificación asignada a la entrada.\n    \n- **palabraClave** (cadena): Una palabra clave asociada con la entrada.\n    \n- **clase** (cadena): El ID de la clase relacionada con la entrada.\n    \n\n#### **Ejemplo**\n\n``` json\njsonCopiar código{\n  \"monto\": 1500,\n  \"calificacion\": 4,\n  \"palabraClave\": \"incentivo2024\",\n  \"clase\": \"1\"\n}\n\n ```\n\nEste endpoint permite la adición de un bono para un profesor específico.\n\n#### **Cuerpo de la solicitud**\n\n- **monto** (número): El monto del bono.\n    \n- **calificacion** (número): La calificación asociada con el bono.\n    \n- **palabraClave** (cadena): La palabra clave asociada con el bono.\n    \n- **clase** (cadena): El ID de la clase para la cual se está añadiendo el bono.\n    \n\n#### **Respuesta**\n\nLa respuesta contendrá el estado de la solicitud."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Bono Erroneo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"El monto debe ser un valor positivo y no puede estar vacio\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"monto\": 0,\n   \"calificacion\": 4,\n   \"palabraClave\": \"incentivo2024\",\n   \"clase\": \"{{clase_codigo_bono_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/bono/{{usuario_profesor_id}}",
+						"description": "#### **Crear Bono Erróneo**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/bono/{{usuario_profesor_id}}`\n\n**Descripción:**  \nPrueba de creación de bono con datos inválidos.\n\n**Cuerpo de la solicitud (JSON):**\n\n```\njsonCopiar código{\n  \"monto\": 0,\n  \"calificacion\": 4,\n  \"palabraClave\": \"incentivo2024\",\n  \"clase\": \"{{clase_codigo_bono_id}}\"\n}\n\n ```\n\n**Respuesta esperada (400 Bad Request):**\n\n```\njsonCopiar código{\n  \"error\": \"El monto debe ser un valor positivo y no puede estar vacío.\"\n}\n\n ```\n\n- \"monto\" (number): The amount associated with the resource.\n    \n- \"calificacion\" (number): The rating or score for the resource.\n    \n- \"palabraClave\" (string): A keyword or phrase related to the resource.\n    \n- \"clase\" (string): The identifier for the class associated with the resource.\n    \n\nThe response of this request can be documented as a JSON schema."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Bono - Usuario Erroneo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"Solo un usuario con rol Profesor puede crear un bono\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n   \"monto\": 400,\n   \"calificacion\": 4,\n   \"palabraClave\": \"incentivo2024\",\n   \"clase\": \"{{clase_codigo_bono_id}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/bono/{{usuario_decano_bono_id}}",
+						"description": "#### **Crear Bono - Usuario Erróneo**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/bono/{{usuario_decano_bono_id}}`\n\n**Descripción:**  \nPrueba la creación de un bono utilizando un usuario con un rol incorrecto (Decano en lugar de Profesor).\n\n**Cuerpo de la solicitud (JSON):**\n\n``` json\njsonCopiar código{\n  \"monto\": 400,\n  \"calificacion\": 4,\n  \"palabraClave\": \"incentivo2024\",\n  \"clase\": \"{{clase_codigo_bono_id}}\"\n}\n\n ```\n\n**Respuesta esperada (400 Bad Request):**\n\n``` json\njsonCopiar código{\n  \"error\": \"Solo un usuario con rol Profesor puede crear un bono.\"\n}\n\n ```\n\n**Notas:**\n\n- Este endpoint verifica que solo los usuarios con el rol adecuado (Profesor) puedan crear bonos.\n    \n- Si el usuario no tiene el rol correcto, devuelve un error."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Bono por Codigo",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/bono/codigo/{{clase_codigo}}",
+						"description": "#### **Obtener Bono por Código**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/bono/codigo/{{clase_codigo}}`\n\n**Descripción:**  \nObtiene la información del bono asociado al código de clase especificado.\n\n**Respuesta esperada (200 OK):**\n\n``` json\njsonCopiar código{\n  \"id\": \"bono-123\",\n  \"monto\": 1500,\n  \"calificacion\": 4,\n  \"palabraClave\": \"incentivo2024\",\n  \"clase\": \"clase-123\",\n  \"fechaCreacion\": \"2024-12-01T12:00:00Z\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Bono por Codigo Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"No se encontraron bonos con el código de clase especificado\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/bono/codigo/9999",
+						"description": "#### **Bono por Código Inexistente**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/bono/codigo/9999`\n\n**Descripción:**  \nPrueba de obtención de un bono utilizando un código de clase inexistente.\n\n**Respuesta esperada (404 Not Found):**\n\n``` json\njsonCopiar código{\n  \"error\": \"No se encontraron bonos con el código de clase especificado.\"\n}\n\n ```\n\n**Notas:**\n\n- Este endpoint devuelve un error si el código de clase no tiene bonos asociados."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Bonos de Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/bono/usuario/{{usuario_profesor_id}}",
+						"description": "#### **Obtener Bonos de Usuario**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/bono/usuario/{{usuario_profesor_id}}`\n\n**Descripción:**  \nObtiene la lista de bonos asignados a un usuario con rol de profesor.\n\n**Respuesta esperada (200 OK):**\n\n``` json\njsonCopiar código[\n  {\n    \"id\": \"bono-123\",\n    \"monto\": 1500,\n    \"calificacion\": 4,\n    \"palabraClave\": \"incentivo2024\",\n    \"clase\": \"clase-123\",\n    \"fechaCreacion\": \"2024-12-01T12:00:00Z\"\n  }\n]\n\n ```\n\n**Errores comunes:**\n\n- `404 Not Found`: No se encontraron bonos para el usuario especificado."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Bonos de Usuario Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"No se encontraron bonos para el usuario con ID 9999\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/bono/usuario/9999",
+						"description": "#### **Obtener Bonos de Usuario Inexistente**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/bono/usuario/9999`\n\n**Descripción:**  \nPrueba de obtención de bonos para un usuario inexistente.\n\n**Respuesta esperada (404 Not Found):**\n\n``` json\njsonCopiar código{\n  \"error\": \"No se encontraron bonos para el usuario con ID 9999.\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Bono",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204 or 200\", function () {",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 204]);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/bono/{{bono_id}}",
+						"description": "#### **Borrar Bono**\n\n**Método:** `DELETE`  \n**URL:** `http://localhost:3000/api/v1/bono/{{bono_id}}`\n\n**Descripción:**  \nElimina un bono específico identificado por su ID.\n\n**Respuesta esperada (204 No Content):**  \n(No contiene cuerpo de respuesta).\n\n**Errores comunes:**\n\n- `404 Not Found`: El bono especificado no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Bono Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"El bono con el id dado no fue encontrado\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/bono/9999",
+						"description": "#### **Borrar Bono Inexistente**\n\n**Método:** `DELETE`  \n**URL:** `http://localhost:3000/api/v1/bono/9999`\n\n**Descripción:**  \nPrueba de eliminación de un bono que no existe en el sistema.\n\n**Respuesta esperada (404 Not Found):**\n\n```\njsonCopiar código{\n  \"error\": \"El bono con el ID dado no fue encontrado.\"\n}\n\n ```\n\n**Notas:**\n\n- Este endpoint devuelve un error si el ID del bono proporcionado no corresponde a ningún registro existente."
+					},
+					"response": []
+				}
+			],
+			"description": "Peticiones relacionadas con la entidad \"Bono\"."
+		},
+		{
+			"name": "Clase",
+			"item": [
+				{
+					"name": "Crear Clase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"clase_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Diseño de Algoritmos\",\n  \"codigo\": \"DALGO10001\",\n  \"numeroCreditos\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/clase/",
+						"description": "#### **Crear Clase**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/clase/`\n\n**Descripción:**  \nPermite crear una nueva clase en el sistema.\n\n**Cuerpo de la solicitud (JSON):**\n\n``` json\njsonCopiar código{\n  \"nombre\": \"Introducción a la Programación\",\n  \"codigo\": \"IP10000001\",\n  \"numeroCreditos\": 3\n}\n\n ```\n\n**Respuesta esperada (201 Created):**\n\n``` json\njsonCopiar código{\n  \"id\": \"clase-123\",\n  \"nombre\": \"Introducción a la Programación\",\n  \"codigo\": \"IP10000001\",\n  \"numeroCreditos\": 3,\n  \"fechaCreacion\": \"2024-12-01T12:00:00Z\"\n}\n\n ```\n\n**Errores comunes:**\n\n- `400 Bad Request`: Parámetros inválidos en el cuerpo de la solicitud."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Clase Invalida",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Diseño de Algoritmos\",\n  \"codigo\": \"1\",\n  \"numeroCreditos\": 3\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/clase/",
+						"description": "#### **Crear Clase Inválida**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/clase/`\n\n**Descripción:**  \nPrueba de creación de clase con datos inválidos.\n\n**Cuerpo de la solicitud (JSON):**\n\n``` json\njsonCopiar código{\n  \"nombre\": \"Diseño de Algoritmos\",\n  \"codigo\": \"1\",\n  \"numeroCreditos\": 3\n}\n\n ```\n\n**Respuesta esperada (400 Bad Request):**\n\n``` json\njsonCopiar código{\n  \"error\": \"El código debe tener al menos 5 caracteres.\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Clase por ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/clase/{{clase_id}}",
+						"description": "#### **Obtener Clase por ID**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/clase/{{clase_id}}`\n\n**Descripción:**  \nObtiene los detalles de una clase específica según su ID.\n\n**Respuesta esperada (200 OK):**\n\n``` json\njsonCopiar código{\n  \"id\": \"clase-123\",\n  \"nombre\": \"Diseño de Algoritmos\",\n  \"codigo\": \"DALGO10001\",\n  \"numeroCreditos\": 3,\n  \"fechaCreacion\": \"2024-12-01T12:00:00Z\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Clase Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"La clase con el id dado no fue encontrada\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/clase/99999",
+						"description": "#### **Obtener Clase** Inexistente\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/clase/99999`\n\n**Descripción:**  \nPrueba de obtención de una clase con un ID inexistente.\n\n**Respuesta esperada (404 Not Found):**\n\n``` json\njsonCopiar código{\n  \"error\": \"La clase con el ID dado no fue encontrada.\"\n}\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Peticiones relacionadas con la entidad \"Clase\"."
+		},
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "Crear Usuario Decano",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"usuario_decano_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 124536272,\n    \"nombre\": \"Pedro Pérez\",\n    \"grupoInvestigacion\": \"IMAGINE\",\n    \"numeroExtension\": 1234,\n    \"rol\": \"Profesor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/usuario/",
+						"description": "#### **Crear Usuario Decano**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/usuario/`\n\n**Descripción:**  \nCrea un nuevo usuario con rol de decano.\n\n**Cuerpo de la solicitud (JSON):**\n\n``` json\njsonCopiar código{\n  \"numeroCedula\": 1234567890,\n  \"nombre\": \"Pedro Pérez\",\n  \"grupoInvestigacion\": \"IMAGINE\",\n  \"numeroExtension\": 1234,\n  \"rol\": \"Decano\"\n}\n\n ```\n\n**Respuesta esperada (201 Created):**\n\n``` json\njsonCopiar código{\n  \"id\": \"usuario-123\",\n  \"numeroCedula\": 1234567890,\n  \"nombre\": \"Pedro Pérez\",\n  \"grupoInvestigacion\": \"IMAGINE\",\n  \"numeroExtension\": 1234,\n  \"rol\": \"Decano\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Usuario Profesor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var data = pm.response.json()",
+									"pm.globals.set(\"usuario_profesor_id\", data.id);",
+									"",
+									"pm.test(\"Status code is 201\", function () {",
+									"   pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 124536272,\n    \"nombre\": \"Ivan Pérez\",\n    \"grupoInvestigacion\": \"TICSW\",\n    \"numeroExtension\": 1234,\n    \"rol\": \"Profesor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/usuario/",
+						"description": "#### **Crear Usuario Profesor**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/usuario/`\n\n**Descripción:**  \nCrea un nuevo usuario con rol de profesor.\n\n**Cuerpo de la solicitud (JSON):**\n\n``` json\njsonCopiar código{\n  \"numeroCedula\": 1234567890,\n  \"nombre\": \"Juan Pérez\",\n  \"grupoInvestigacion\": \"TICSW\",\n  \"\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Usuario Erroneo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 400\", function () {",
+									"   pm.response.to.have.status(400);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"El grupo de investigación debe ser TICSW, IMAGINE o COMIT para profesores\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"numeroCedula\": 124536272,\n    \"nombre\": \"Ivan Pérez\",\n    \"grupoInvestigacion\": \"NO EXISTE\",\n    \"numeroExtension\": 1234,\n    \"rol\": \"Profesor\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "http://localhost:3000/api/v1/usuario/",
+						"description": "#### **Crear Usuario Erróneo**\n\n**Método:** `POST`  \n**URL:** `http://localhost:3000/api/v1/usuario/`\n\n**Descripción:**  \nPrueba de creación de un usuario con datos inválidos.\n\n**Cuerpo de la solicitud (JSON):**\n\n``` json\njsonCopiar código{\n  \"numeroCedula\": 124536272,\n  \"nombre\": \"Ivan Pérez\",\n  \"grupoInvestigacion\": \"NO EXISTE\",\n  \"numeroExtension\": 1234,\n  \"rol\": \"Profesor\"\n}\n\n ```\n\n**Respuesta esperada (400 Bad Request):**\n\n``` json\njsonCopiar código{\n  \"error\": \"El grupo de investigación debe ser TICSW, IMAGINE o COMIT para profesores.\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Usuario",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"   pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/usuario/{{usuario_profesor_id}}",
+						"description": "#### **Obtener Usuario**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/usuario/{{usuario_profesor_id}}`\n\n**Descripción:**  \nObtiene los detalles de un usuario con el ID especificado.\n\n**Respuesta esperada (200 OK):**\n\n``` json\njsonCopiar código{\n  \"id\": \"usuario-123\",\n  \"numeroCedula\": 1234567890,\n  \"nombre\": \"Juan Pérez\",\n  \"grupoInvestigacion\": \"TICSW\",\n  \"numeroExtension\": 1234,\n  \"rol\": \"Profesor\",\n  \"fechaCreacion\": \"2024-12-01T12:00:00Z\"\n}\n\n ```\n\n**Errores comunes:**\n\n- `404 Not Found`: El usuario con el ID especificado no fue encontrado."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Usuario Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"The user with the given id was not found\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/usuario/9999",
+						"description": "#### **Obtener Usuario Inexistente**\n\n**Método:** `GET`  \n**URL:** `http://localhost:3000/api/v1/usuario/9999`\n\n**Descripción:**  \nPrueba de obtención de un usuario con un ID inexistente.\n\n**Respuesta esperada (404 Not Found):**\n\n``` json\njsonCopiar código{\n  \"error\": \"El usuario con el ID dado no fue encontrado.\"\n}\n\n ```"
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario Decano",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/usuario/{{usuario_decano_id}}",
+						"description": "**Método:** `DELETE`  \n**URL:** `http://localhost:3000/api/v1/usuario/{{usuario_decano_id}}`\n\n**Descripción:**  \nElimina un usuario con rol de decano del sistema.\n\n**Respuesta esperada (204 No Content):**  \n(No contiene cuerpo de respuesta).\n\n**Errores comunes:**\n\n- `404 Not Found`: El usuario con el ID dado no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario Profesor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 204\", function () {",
+									"   pm.response.to.have.status(204);",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/usuario/{{usuario_profesor_id}}",
+						"description": "#### **Borrar Usuario Profesor**\n\n**Método:** `DELETE`  \n**URL:** `http://localhost:3000/api/v1/usuario/{{usuario_profesor_id}}`\n\n**Descripción:**  \nElimina un usuario con rol de profesor del sistema.\n\n**Respuesta esperada (204 No Content):**  \n(No contiene cuerpo de respuesta).\n\n**Errores comunes:**\n\n- `404 Not Found`: El usuario con el ID dado no existe."
+					},
+					"response": []
+				},
+				{
+					"name": "Borrar Usuario Inexistente",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 404\", function () {",
+									"   pm.response.to.have.status(404);",
+									"});",
+									"",
+									"pm.test(\"Get expected error message\", function () {",
+									"   var data = pm.response.json();",
+									"   pm.expect(data.message).to.eql(\"El usuario con el id dado no fue encontrado\");",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": "http://localhost:3000/api/v1/usuario/9999",
+						"description": "#### **Borrar Usuario Inexistente**\n\n**Método:** `DELETE`  \n**URL:** `http://localhost:3000/api/v1/usuario/9999`\n\n**Descripción:**  \nPrueba de eliminación de un usuario inexistente.\n\n**Respuesta esperada (404 Not Found):**\n\n``` json\njsonCopiar código{\n  \"error\": \"El usuario con el ID dado no fue encontrado.\"\n}\n\n ```"
+					},
+					"response": []
+				}
+			],
+			"description": "Peticiones relacionadas con la entidad \"Usuario\"."
+		}
+	]
+}
